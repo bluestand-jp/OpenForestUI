@@ -1,0 +1,18 @@
+# OpenForestUI — Python dependencies for the HUD OCR sidecar (ocr-poc/).
+#
+# These are only needed for the EXACT live CS / Gold / objective counts that the
+# spectator Live Client Data API rounds or omits. The app runs fine without them —
+# those values then simply fall back to the coarser spectator-API numbers.
+#
+# Install (64-bit Windows, Python 3.9–3.12 recommended):
+#     py -m pip install -r requirements.txt
+#   (or)  python -m pip install -r requirements.txt
+#
+# Heads-up: easyocr pulls in PyTorch, which is a large download (several hundred MB).
+# The CPU build is enough for this sidecar; a CUDA GPU is optional.
+
+opencv-python>=4.5      # cv2 — frame cropping, thresholding, template matching
+numpy>=1.21             # array math + the digit templates in digit_templates.npz
+dxcam>=0.0.5            # DXGI Desktop Duplication screen capture (goldcap.py --live)
+easyocr>=1.6            # neural OCR for the HUD digits (installs torch + torchvision)
+Pillow>=9.0             # PIL.ImageGrab — GDI capture fallback used by csdiag.py

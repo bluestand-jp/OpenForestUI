@@ -1,0 +1,8 @@
+# transient harness output — regenerated each run (screenshots, logs, per-port
+# browser profiles, ad-hoc measurement scripts). Committed harness files are
+# *.js / *.json / README.md / .gitignore.
+edge-profile*/
+*.log
+*.png
+*.py
+api_scan_*.json

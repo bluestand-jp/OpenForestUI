@@ -1,0 +1,136 @@
+<Window x:Class="OpenForestUI.MVVM.View.StartupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:OpenForestUI.MVVM.ViewModel"
+        xmlns:local="clr-namespace:OpenForestUI.MVVM.View"
+        mc:Ignorable="d"
+        Title="OpenForestUI" Height="300" Width="600"
+        Icon="../../Assets/Icons/OpenForestUI.ico"
+        AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModel:StartupViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+
+        <!-- Thin, rounded determinate progress bar: brand-green fill (with a soft glow) on a dark track. -->
+        <Style x:Key="SplashProgress" TargetType="ProgressBar">
+            <Setter Property="Height" Value="6"/>
+            <Setter Property="Maximum" Value="100"/>
+            <Setter Property="Foreground" Value="#5CC59E"/>
+            <Setter Property="Background" Value="#26262E"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Grid>
+                            <Border CornerRadius="3" Background="{TemplateBinding Background}"/>
+                            <Border x:Name="PART_Track"/>
+                            <Border x:Name="PART_Indicator" HorizontalAlignment="Left" CornerRadius="3"
+                                    Background="{TemplateBinding Foreground}">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#5CC59E" BlurRadius="9" ShadowDepth="0" Opacity="0.7"/>
+                                </Border.Effect>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Rounded dark card with a soft drop shadow (the 18px margin leaves room for the shadow). -->
+    <Border x:Name="Card" Margin="18" CornerRadius="16" Background="#15151A"
+            ClipToBounds="True" RenderTransformOrigin="0.5,0.5" Opacity="0">
+        <Border.RenderTransform>
+            <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
+        </Border.RenderTransform>
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="30" ShadowDepth="0" Opacity="0.6"/>
+        </Border.Effect>
+
+        <Grid>
+            <!-- soft brand-green glow behind the wordmark (gently pulsing) -->
+            <Ellipse x:Name="Glow" Width="320" Height="320" Margin="0,-46,0,0"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.2">
+                <Ellipse.Fill>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#5CC59E" Offset="0"/>
+                        <GradientStop Color="#005CC59E" Offset="1"/>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <!-- main content: brand (center) + progress + status/version (bottom) -->
+            <Grid Margin="40,34,40,28">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Source="../../Assets/Images/OpenForestUI_icon.png" Width="56" Height="56" VerticalAlignment="Center"/>
+                    <StackPanel VerticalAlignment="Center" Margin="16,0,0,0">
+                        <TextBlock Text="OpenForestUI" FontFamily="pack://application:,,,/Assets/Fonts/#Venus Rising" Foreground="White" FontSize="34" FontWeight="Normal"/>
+                        <TextBlock Text="Broadcast Overlays" Foreground="#9AA0AD" FontSize="13" Margin="2,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <ProgressBar Grid.Row="1" Style="{StaticResource SplashProgress}"
+                             Value="{Binding LoadProgress}" Margin="0,0,0,11"/>
+
+                <Grid Grid.Row="2">
+                    <TextBlock Text="{Binding Status}" Foreground="#8B91A0" FontSize="12"
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis" Margin="0,0,12,0"/>
+                    <TextBlock Text="{Binding AppVersion}" Foreground="#6B7080" FontSize="12"
+                               HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </Grid>
+            </Grid>
+
+            <!-- Update prompt (only when an app update is offered) — overlays the card. -->
+            <Border Background="#15151A" CornerRadius="16"
+                    Visibility="{Binding ShowUpdateDialog, Converter={StaticResource BoolToVisConverter}}">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="40">
+                    <TextBlock Text="{Binding UpdateText}" Foreground="White" FontSize="18"
+                               HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="UpdateNow" Style="{StaticResource StartupButtonTheme}"
+                                Content="Update Now" Click="UpdateNow_Click" Margin="0,0,10,0"/>
+                        <Button x:Name="UpdateSkip" Style="{StaticResource StartupButtonTheme}"
+                                Content="Remind Me Later" Click="UpdateSkip_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Border.Triggers>
+            <EventTrigger RoutedEvent="Border.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!-- entrance: fade + subtle scale-up -->
+                        <DoubleAnimation Storyboard.TargetName="Card" Storyboard.TargetProperty="Opacity"
+                                         From="0" To="1" Duration="0:0:0.4"/>
+                        <DoubleAnimation Storyboard.TargetName="Card"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                         From="0.97" To="1" Duration="0:0:0.45"/>
+                        <DoubleAnimation Storyboard.TargetName="Card"
+                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                         From="0.97" To="1" Duration="0:0:0.45"/>
+                        <!-- ambient glow pulse (forever) -->
+                        <DoubleAnimation Storyboard.TargetName="Glow" Storyboard.TargetProperty="Opacity"
+                                         From="0.14" To="0.30" Duration="0:0:1.7"
+                                         AutoReverse="True" RepeatBehavior="Forever"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Border.Triggers>
+    </Border>
+</Window>

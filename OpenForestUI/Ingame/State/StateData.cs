@@ -1,0 +1,97 @@
+﻿using OpenForestUI.Common.Controllers;
+using OpenForestUI.Ingame.Data.Frontend;
+using OpenForestUI.Ingame.Data.Hub;
+using OpenForestUI.Ingame.Data.Hub.Objectives;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
+namespace OpenForestUI.Ingame.State
+{
+    public class StateData
+    {
+
+        #region NotSerialized
+        [JsonIgnore]
+        public BackEndObjective backBaron;
+
+        [JsonIgnore]
+        public BackEndObjective backDragon;
+
+        private State gameState;
+        #endregion 
+
+        public FrontEndObjective dragon;
+
+        public FrontEndObjective baron;
+
+        public UpcomingObjective nextDragon;
+
+        public UpcomingObjective nextBaron;
+
+        public double gameTime;
+        public bool gamePaused;
+
+        public float blueGold => gameState.blueTeam?.GetGold(gameTime) ?? 0;
+        public float redGold => gameState.redTeam?.GetGold(gameTime) ?? 0;
+
+        public Dictionary<double, float> goldGraph => gameState.GetGoldGraph();
+        public InhibitorInfo inhibitors;
+
+        public ScoreboardConfig scoreboard;
+
+        public InfoSidePage infoPage;
+        public string blueColor => gameState?.blueTeam?.color;
+        public string redColor => gameState?.redTeam?.color;
+
+        public StateData()
+        {
+            this.gameState = BroadcastController.Instance.IGController.gameState;
+            this.dragon = new(Objective.ObjectiveType.Dragon, 300);
+            this.baron = new(Objective.ObjectiveType.Baron, 1200);
+            this.nextDragon = new UpcomingObjective();
+            this.nextBaron = new UpcomingObjective();
+            this.backBaron = new(0);
+            this.backDragon = new(0);
+            this.scoreboard = new ScoreboardConfig();
+            this.inhibitors = new InhibitorInfo();
+        }
+
+        public bool ShouldSerializegoldGraph()
+        {
+            return IngameController.CurrentSettings.GoldGraph;
+        }
+
+        public bool ShouldSerializeinhibitors()
+        {
+            return IngameController.CurrentSettings.Inhibs;
+        }
+
+        public bool ShouldSerializebaron()
+        {
+            return IngameController.CurrentSettings.Baron && backBaron.DurationRemaining > 0;
+        }
+
+        public bool ShouldSerializedragon()
+        {
+            return IngameController.CurrentSettings.Elder && backDragon.DurationRemaining > 0;
+        }
+
+        public bool ShouldSerializeinfoPage()
+        {
+            // null when the selected tab produced zero entries (e.g. EXP under Vanguard) —
+            // don't serialize it: the frontend treats a present-but-empty page as data.
+            return IngameController.CurrentSettings.SideGraph && infoPage != null;
+        }
+
+        public bool ShouldSerializenextDragon()
+        {
+            return ConfigController.Component.Ingame.Objectives.UseCustomDragonTimer;
+        }
+
+        public bool ShouldSerializenextBaron()
+        {
+            return ConfigController.Component.Ingame.Objectives.UseCustomBaronTimer;
+        }
+
+    }
+}

@@ -1,0 +1,111 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\Icons\OpenForestUI.ico</ApplicationIcon>
+    <StartupObject>OpenForestUI.App</StartupObject>
+    <Copyright>Copyright (c) 2026 BlueStand</Copyright>
+    <Authors>BlueStand</Authors>
+    <Company>BlueStand</Company>
+    <Description>OpenForestUI - broadcast overlay tools for LoL spectator</Description>
+    <PackageIcon>BE_icon.png</PackageIcon>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Assets\TeamIcons\**" />
+    <Compile Remove="Frontend\**" />
+    <EmbeddedResource Remove="Assets\TeamIcons\**" />
+    <EmbeddedResource Remove="Frontend\**" />
+    <None Remove="Assets\TeamIcons\**" />
+    <None Remove="Frontend\**" />
+    <Page Remove="Assets\TeamIcons\**" />
+    <Page Remove="Frontend\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\BE_icon.png" />
+    <None Remove="Assets\Icons\BlueEssence.ico" />
+    <None Remove="Assets\Images\ArrowsDownWhite.png" />
+    <None Remove="Assets\Images\LeagueOfLegendsIcon.png" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="Assets\Images\BE_icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Icons\BlueEssence.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\ArrowsDownWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\BE_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\LeagueOfLegendsIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- OpenForestUI branding: green "weeds" app icon (.ico) + matching in-app logo (PNG), and the
+         Venus Rising brand font (embedded as Resource so the #Venus Rising pack URI resolves). -->
+    <None Remove="Assets\Icons\OpenForestUI.ico" />
+    <None Remove="Assets\Images\OpenForestUI_icon.png" />
+    <None Remove="Assets\Fonts\Venus Rising Rg.otf" />
+    <Content Include="Assets\Icons\OpenForestUI.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\OpenForestUI_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Fonts\Venus Rising Rg.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="EmbedIO" Version="3.5.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
+    <PackageReference Include="WPF-UI" Version="3.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LCUSharp\LCUSharp.csproj" />
+    <ProjectReference Include="..\OpenForestUI.Common\OpenForestUI.Common.csproj" />
+    <ProjectReference Include="..\OpenForestUI.Farsight\OpenForestUI.Farsight.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\DragDrop\" />
+  </ItemGroup>
+
+  <Target Name="CustomActionsAfterPublish" AfterTargets="Publish" Condition="'$(PackZip)' == 'true'">
+    <Exec Command="cd $(SolutionDir)Overlays\ingame\&#xD;&#xA;call npm run build&#xD;&#xA;cd $(SolutionDir)Overlays\pickban\&#xD;&#xA;call npm run build&#xD;&#xA;if not exist $(SolutionDir)Publish\Frontend\ mkdir $(SolutionDir)Publish\Frontend\&#xD;&#xA;cd $(SolutionDir)Publish\Frontend&#xD;&#xA;md ingame&#xD;&#xA;md pickban&#xD;&#xA;xcopy &quot;$(SolutionDir)Overlays\ingame\dist&quot; &quot;$(SolutionDir)Publish\Frontend\ingame&quot; /E/H&#xD;&#xA;xcopy &quot;$(SolutionDir)Overlays\pickban\build&quot; &quot;$(SolutionDir)Publish\Frontend\pickban&quot; /E/H&#xD;&#xA;if not exist $(SolutionDir)Publish\ocr-poc\ mkdir $(SolutionDir)Publish\ocr-poc\&#xD;&#xA;xcopy &quot;$(SolutionDir)ocr-poc\goldcap.py&quot; &quot;$(SolutionDir)Publish\ocr-poc\&quot; /Y&#xD;&#xA;xcopy &quot;$(SolutionDir)ocr-poc\topbar_reader.py&quot; &quot;$(SolutionDir)Publish\ocr-poc\&quot; /Y&#xD;&#xA;xcopy &quot;$(SolutionDir)ocr-poc\digit_templates.npz&quot; &quot;$(SolutionDir)Publish\ocr-poc\&quot; /Y&#xD;&#xA;cd $(SolutionDir)Publish&#xD;&#xA;&quot;C:\Program Files\7-Zip\7z.exe&quot; a OpenForestUI-1.x.x.zip *&#xD;&#xA;if exist &quot;$(SolutionDir)Releases\OpenForestUI-1.x.x.zip&quot; del &quot;$(SolutionDir)Releases\OpenForestUI-1.x.x.zip&quot;&#xD;&#xA;move OpenForestUI-1.x.x.zip $(SolutionDir)Releases&#xD;&#xA;rmdir /S /Q $(SolutionDir)Publish\&#xD;&#xA;&#xD;&#xA;" />
+  </Target>
+</Project>

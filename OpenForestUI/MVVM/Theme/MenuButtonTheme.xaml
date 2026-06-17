@@ -1,0 +1,37 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Sidebar navigation item, restyled to a Fluent NavigationView-like look: a rounded selection
+         chip with a hover fill and a green accent indicator bar on the left when selected. Keyed and
+         used only by the MainWindow sidebar RadioButtons (which carry the icon + label as content). -->
+    <Style TargetType="{x:Type RadioButton}" x:Key="MenuButtonTheme">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid Height="46" Background="Transparent">
+                        <Border x:Name="bg" Background="Transparent" CornerRadius="6" Margin="8,3"/>
+                        <Border x:Name="accent" Width="3" Height="22" CornerRadius="1.5"
+                                HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0"
+                                Background="{DynamicResource Brush.Accent}" Opacity="0"/>
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" Margin="26,0,12,0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource Brush.Bg.NavHover}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource Brush.Bg.NavHover}"/>
+                            <Setter TargetName="accent" Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

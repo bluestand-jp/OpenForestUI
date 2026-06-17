@@ -1,0 +1,434 @@
+{
+  "gameTime": 1192,
+  "gamePaused": false,
+  "blueGold": 44800,
+  "redGold": 42100,
+  "blueColor": "#37C6F4",
+  "redColor": "#E86CE0",
+  "goldGraph": {
+    "0": 0,
+    "15": 31,
+    "30": 61,
+    "45": 87,
+    "60": 108,
+    "75": 122,
+    "90": 128,
+    "105": 124,
+    "120": 110,
+    "135": 84,
+    "150": 48,
+    "165": 0,
+    "180": -60,
+    "195": -132,
+    "210": -214,
+    "225": -305,
+    "240": -405,
+    "255": -513,
+    "270": -625,
+    "285": -742,
+    "300": -861,
+    "315": -980,
+    "330": -1097,
+    "345": -1211,
+    "360": -1320,
+    "375": -1422,
+    "390": -1515,
+    "405": -1599,
+    "420": -1672,
+    "435": -1734,
+    "450": -1784,
+    "465": -1821,
+    "480": -1845,
+    "495": -1858,
+    "510": -1859,
+    "525": -1849,
+    "540": -1830,
+    "555": -1802,
+    "570": -1767,
+    "585": -1727,
+    "600": -1683,
+    "615": -1638,
+    "630": -1592,
+    "645": -1548,
+    "660": -1508,
+    "675": -1473,
+    "690": -1445,
+    "705": -1425,
+    "720": -1415,
+    "735": -1414,
+    "750": -1424,
+    "765": -1445,
+    "780": -1478,
+    "795": -1521,
+    "810": -1575,
+    "825": -1638,
+    "840": -1710,
+    "855": -1790,
+    "870": -1875,
+    "885": -1966,
+    "900": -2058,
+    "915": -2152,
+    "930": -2245,
+    "945": -2335,
+    "960": -2420,
+    "975": -2499,
+    "990": -2571,
+    "1005": -2633,
+    "1020": -2684,
+    "1035": -2724,
+    "1050": -2752,
+    "1065": -2767,
+    "1080": -2770,
+    "1095": -2759,
+    "1110": -2737,
+    "1125": -2703,
+    "1140": -2658,
+    "1155": -2603,
+    "1170": -2540,
+    "1185": -2471,
+    "1192": -2300
+  },
+  "inhibitors": {
+    "Inhibitors": [],
+    "Location": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "dragon": {
+    "Objective": {
+      "Cooldown": 300,
+      "IsAlive": false,
+      "TimesTakenInMatch": 3,
+      "LastTakenBy": 1,
+      "Type": "Dragon"
+    },
+    "DurationRemaining": "",
+    "GoldDifference": 0,
+    "SpawnTimer": 262
+  },
+  "baron": {
+    "Objective": {
+      "Cooldown": 360,
+      "IsAlive": false,
+      "TimesTakenInMatch": 0,
+      "LastTakenBy": -1,
+      "Type": "Baron"
+    },
+    "DurationRemaining": "",
+    "GoldDifference": 0,
+    "SpawnTimer": 8
+  },
+  "nextDragon": {
+    "Element": "Ocean",
+    "SpawnTimer": 262
+  },
+  "nextBaron": {
+    "Element": "Baron",
+    "SpawnTimer": 8
+  },
+  "scoreboard": {
+    "GameTime": 1192,
+    "SeriesGameCount": 3,
+    "TournamentName": "EMEA Masters 2026 Spring | Groupstage Day 2",
+    "BlueTeam": {
+      "Name": "GL",
+      "Icon": "frontend/images/dragons/scoreboard/oceanLarge.png",
+      "Kills": 23,
+      "Towers": 6,
+      "Gold": 44800,
+      "VoidGrubs": 5,
+      "Baron": 1,
+      "Inhibitors": 1,
+      "PlatesDestroyed": 0,
+      "Region": "LFL",
+      "Seed": "2",
+      "Flag": "fr",
+      "Dragons": [
+        "Fire",
+        "Ocean"
+      ]
+    },
+    "RedTeam": {
+      "Name": "G2N",
+      "Icon": "frontend/images/dragons/scoreboard/fireLarge.png",
+      "Kills": 18,
+      "Towers": 7,
+      "Gold": 42100,
+      "VoidGrubs": 2,
+      "Baron": 0,
+      "Inhibitors": 0,
+      "PlatesDestroyed": 0,
+      "Region": "PRM",
+      "Seed": "1",
+      "Flag": "de",
+      "Dragons": [
+        "Fire",
+        "Ocean",
+        "Cloud"
+      ]
+    },
+    "Players": [
+      {
+        "Team": "ORDER",
+        "Position": "TOP",
+        "Name": "シモン3",
+        "ChampionID": "Shen",
+        "ChampionName": "シェン",
+        "Level": 14,
+        "Kills": 3,
+        "Deaths": 2,
+        "Assists": 5,
+        "CreepScore": 212,
+        "Items": [
+          3748,
+          3047,
+          3068,
+          3065,
+          3083,
+          3142,
+          3364
+        ],
+        "Spells": [
+          "SummonerFlash",
+          "SummonerTeleport"
+        ],
+        "Gold": 11800
+      },
+      {
+        "Team": "ORDER",
+        "Position": "JUNGLE",
+        "Name": "Bibobon0108",
+        "ChampionID": "JarvanIV",
+        "ChampionName": "ジャーヴァンⅣ",
+        "Level": 15,
+        "Kills": 5,
+        "Deaths": 1,
+        "Assists": 8,
+        "CreepScore": 178,
+        "Items": [
+          6692,
+          3047,
+          3071,
+          3814,
+          3179,
+          3142,
+          3364
+        ],
+        "Spells": [
+          "SummonerSmite",
+          "SummonerFlash"
+        ],
+        "Gold": 10900
+      },
+      {
+        "Team": "ORDER",
+        "Position": "MIDDLE",
+        "Name": "hako0125",
+        "ChampionID": "Sylas",
+        "ChampionName": "サイラス",
+        "Level": 16,
+        "Kills": 7,
+        "Deaths": 3,
+        "Assists": 4,
+        "CreepScore": 231,
+        "Items": [
+          3157,
+          3020,
+          6655,
+          4645,
+          3135,
+          3142,
+          3363
+        ],
+        "Spells": [
+          "SummonerDot",
+          "SummonerFlash"
+        ],
+        "Gold": 12400
+      },
+      {
+        "Team": "ORDER",
+        "Position": "BOTTOM",
+        "Name": "karasu1208",
+        "ChampionID": "Varus",
+        "ChampionName": "ヴァルス",
+        "Level": 17,
+        "Kills": 6,
+        "Deaths": 4,
+        "Assists": 3,
+        "CreepScore": 256,
+        "Items": [
+          3031,
+          3006,
+          3094,
+          3036,
+          3072,
+          3142,
+          3363
+        ],
+        "Spells": [
+          "SummonerFlash",
+          "SummonerBarrier"
+        ],
+        "Gold": 13100
+      },
+      {
+        "Team": "ORDER",
+        "Position": "UTILITY",
+        "Name": "ニシノソラ",
+        "ChampionID": "Leona",
+        "ChampionName": "レオナ",
+        "Level": 14,
+        "Kills": 1,
+        "Deaths": 2,
+        "Assists": 11,
+        "CreepScore": 28,
+        "Items": [
+          3877,
+          3158,
+          3107,
+          3222,
+          2065,
+          3142,
+          3364
+        ],
+        "Spells": [
+          "SummonerDot",
+          "SummonerFlash"
+        ],
+        "Gold": 8200
+      },
+      {
+        "Team": "CHAOS",
+        "Position": "TOP",
+        "Name": "sura01",
+        "ChampionID": "Sett",
+        "ChampionName": "セト",
+        "Level": 15,
+        "Kills": 4,
+        "Deaths": 5,
+        "Assists": 6,
+        "CreepScore": 205,
+        "Items": [
+          3748,
+          3047,
+          3068,
+          3065,
+          3083,
+          3142,
+          3364
+        ],
+        "Spells": [
+          "SummonerTeleport",
+          "SummonerFlash"
+        ],
+        "Gold": 12100
+      },
+      {
+        "Team": "CHAOS",
+        "Position": "JUNGLE",
+        "Name": "marou",
+        "ChampionID": "Vi",
+        "ChampionName": "ヴァイ",
+        "Level": 16,
+        "Kills": 2,
+        "Deaths": 6,
+        "Assists": 5,
+        "CreepScore": 168,
+        "Items": [
+          6692,
+          3047,
+          3071,
+          3814,
+          3179,
+          3142,
+          3364
+        ],
+        "Spells": [
+          "SummonerSmite",
+          "SummonerFlash"
+        ],
+        "Gold": 11000
+      },
+      {
+        "Team": "CHAOS",
+        "Position": "MIDDLE",
+        "Name": "AllMight",
+        "ChampionID": "Anivia",
+        "ChampionName": "アニビア",
+        "Level": 17,
+        "Kills": 8,
+        "Deaths": 2,
+        "Assists": 4,
+        "CreepScore": 243,
+        "Items": [
+          3157,
+          3020,
+          6655,
+          4645,
+          3135,
+          3142,
+          3363
+        ],
+        "Spells": [
+          "SummonerFlash",
+          "SummonerTeleport"
+        ],
+        "Gold": 12900
+      },
+      {
+        "Team": "CHAOS",
+        "Position": "BOTTOM",
+        "Name": "サンタさんn",
+        "ChampionID": "Tristana",
+        "ChampionName": "トリスターナ",
+        "Level": 14,
+        "Kills": 9,
+        "Deaths": 1,
+        "Assists": 3,
+        "CreepScore": 288,
+        "Items": [
+          3031,
+          3006,
+          3094,
+          3036,
+          3072,
+          3142,
+          3363
+        ],
+        "Spells": [
+          "SummonerBarrier",
+          "SummonerFlash"
+        ],
+        "Gold": 13900
+      },
+      {
+        "Team": "CHAOS",
+        "Position": "UTILITY",
+        "Name": "TennisContinent",
+        "ChampionID": "Rell",
+        "ChampionName": "レル",
+        "Level": 15,
+        "Kills": 0,
+        "Deaths": 3,
+        "Assists": 9,
+        "CreepScore": 33,
+        "Items": [
+          3877,
+          3158,
+          3107,
+          3222,
+          2065,
+          3142,
+          3364
+        ],
+        "Spells": [
+          "SummonerFlashPerksHextechFlashtraptionV2",
+          "SummonerHeal"
+        ],
+        "Gold": 8600
+      }
+    ]
+  }
+}

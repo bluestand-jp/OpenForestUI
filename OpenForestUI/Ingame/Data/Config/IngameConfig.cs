@@ -109,7 +109,10 @@ namespace OpenForestUI.Ingame.Data.Config
             {
                 FileVersion = CurrentVersion,
                 GoogleFonts = new List<string>() { "News Cycle", "News Cycle:bold", "Droid Sans" },
-                PrmScore = new PrmScoreConfig() { Enabled = false, Font = "News Cycle", TournamentName = "" },
+                // Default broadcast scoreboard: PRM-style top bar + LCK-style bottom comparison board
+                // (the legacy ScoreboardVisual is no longer the default). Enabled=true selects the PRM
+                // top bar over the legacy scoreboard; BottomBar+BottomStyle="lck" adds the LCK board.
+                PrmScore = new PrmScoreConfig() { Enabled = true, BottomBar = true, BottomStyle = "lck", Font = "News Cycle", TournamentName = "" },
                 Inhib = new InhibitorDisplayConfig()
                 {
                     Position = new Vector2(0, 845),

@@ -22,9 +22,10 @@ namespace OpenForestUI.Common.Controllers
     /// </summary>
     public static class OcrGoldController
     {
-        // The sidecar runs in the system Python (easyocr/dxcam/opencv installed). Override the
-        // interpreter with the OPENFORESTUI_PYTHON environment variable if it is not "python" on PATH.
-        public static string PythonExe = Environment.GetEnvironmentVariable("OPENFORESTUI_PYTHON") ?? "python";
+        // The interpreter the sidecar runs in. Resolved by OcrEnvController: the bundled embeddable
+        // ./python when shipped (provisioned on first use), else the system "python" on PATH /
+        // the OPENFORESTUI_PYTHON override in a source checkout.
+        public static string PythonExe => OcrEnvController.InterpreterPath;
         // Resolved relative to the executable (works from a source checkout — bin/<cfg>/<tfm> — or a
         // published build where the publish step copies ocr-poc next to the exe). Override with the
         // OPENFORESTUI_OCR_SCRIPT environment variable.
@@ -115,6 +116,15 @@ namespace OpenForestUI.Common.Controllers
         public static void EnsureStarted()
         {
             if (_running) return;
+            // Make sure the OCR Python environment is provisioned before launching the sidecar. If it
+            // isn't Ready yet, kick off provisioning in the background and bail — the app keeps using
+            // the gold/CS estimate fallback, and a later tick re-checks and starts the sidecar once
+            // the deps finish downloading (DataDragon-style first-run provisioning).
+            if (OcrEnvController.Status != OcrEnvStatus.Ready)
+            {
+                OcrEnvController.EnsureProvisioning();
+                return;
+            }
             lock (_gate)
             {
                 if (_running) return;

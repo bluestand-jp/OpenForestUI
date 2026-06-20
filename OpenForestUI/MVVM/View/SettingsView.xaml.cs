@@ -63,5 +63,12 @@ namespace OpenForestUI.MVVM.View
             }
         }
 
+        // "Set up OCR now" — provision (or retry) the bundled-Python OCR environment in the
+        // background. Status flows back to the card via SettingsViewModel.OcrStatusText.
+        private void OcrSetup_Click(object sender, RoutedEventArgs e)
+        {
+            OcrEnvController.Retry();
+        }
+
     }
 }

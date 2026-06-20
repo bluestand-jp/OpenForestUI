@@ -77,6 +77,28 @@
                 </Grid>
             </ui:Card>
 
+            <!-- OCR (accurate CS/Gold): provision the bundled-Python environment on demand. -->
+            <ui:Card Margin="0,0,0,10" Padding="18,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0">
+                        <TextBlock Text="OCR (accurate CS / Gold)"
+                                   Foreground="{DynamicResource Brush.Text.Primary}"
+                                   FontSize="15" FontWeight="Medium"/>
+                        <TextBlock Text="{Binding OcrStatusText}"
+                                   Foreground="{DynamicResource Brush.Text.Secondary}"
+                                   FontSize="12" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <ui:Button Grid.Column="1" VerticalAlignment="Center"
+                               Content="Set up OCR now"
+                               AutomationProperties.Name="Set up OCR"
+                               Click="OcrSetup_Click"/>
+                </Grid>
+            </ui:Card>
+
             <!-- Log level -->
             <ui:Card Margin="0,0,0,10" Padding="18,14">
                 <Grid>

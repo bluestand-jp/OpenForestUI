@@ -108,4 +108,19 @@
   <Target Name="CustomActionsAfterPublish" AfterTargets="Publish" Condition="'$(PackZip)' == 'true'">
     <Exec Command="cd $(SolutionDir)Overlays\ingame\&#xD;&#xA;call npm run build&#xD;&#xA;cd $(SolutionDir)Overlays\pickban\&#xD;&#xA;call npm run build&#xD;&#xA;if not exist $(SolutionDir)Publish\Frontend\ mkdir $(SolutionDir)Publish\Frontend\&#xD;&#xA;cd $(SolutionDir)Publish\Frontend&#xD;&#xA;md ingame&#xD;&#xA;md pickban&#xD;&#xA;xcopy &quot;$(SolutionDir)Overlays\ingame\dist&quot; &quot;$(SolutionDir)Publish\Frontend\ingame&quot; /E/H&#xD;&#xA;xcopy &quot;$(SolutionDir)Overlays\pickban\build&quot; &quot;$(SolutionDir)Publish\Frontend\pickban&quot; /E/H&#xD;&#xA;if not exist $(SolutionDir)Publish\ocr-poc\ mkdir $(SolutionDir)Publish\ocr-poc\&#xD;&#xA;xcopy &quot;$(SolutionDir)ocr-poc\goldcap.py&quot; &quot;$(SolutionDir)Publish\ocr-poc\&quot; /Y&#xD;&#xA;xcopy &quot;$(SolutionDir)ocr-poc\topbar_reader.py&quot; &quot;$(SolutionDir)Publish\ocr-poc\&quot; /Y&#xD;&#xA;xcopy &quot;$(SolutionDir)ocr-poc\digit_templates.npz&quot; &quot;$(SolutionDir)Publish\ocr-poc\&quot; /Y&#xD;&#xA;cd $(SolutionDir)Publish&#xD;&#xA;&quot;C:\Program Files\7-Zip\7z.exe&quot; a OpenForestUI-1.x.x.zip *&#xD;&#xA;if exist &quot;$(SolutionDir)Releases\OpenForestUI-1.x.x.zip&quot; del &quot;$(SolutionDir)Releases\OpenForestUI-1.x.x.zip&quot;&#xD;&#xA;move OpenForestUI-1.x.x.zip $(SolutionDir)Releases&#xD;&#xA;rmdir /S /Q $(SolutionDir)Publish\&#xD;&#xA;&#xD;&#xA;" />
   </Target>
+
+  <!-- Copy the (already npm-built) overlay output + OCR sidecar next to the exe on EVERY build, so a
+       directly-run build/publish output can serve /frontend (EmbedIO reads ./Frontend\ingame|pickban)
+       and resolve the OCR sidecar (./ocr-poc). Build the overlays first (Overlays/ingame -> dist,
+       Overlays/pickban -> build); if they're absent nothing is copied (no error). -->
+  <Target Name="CopyFrontendToOutput" AfterTargets="Build">
+    <ItemGroup>
+      <_IngameDist Include="$(MSBuildProjectDirectory)\..\Overlays\ingame\dist\**\*" />
+      <_PickbanBuild Include="$(MSBuildProjectDirectory)\..\Overlays\pickban\build\**\*" />
+      <_OcrSidecar Include="$(MSBuildProjectDirectory)\..\ocr-poc\goldcap.py;$(MSBuildProjectDirectory)\..\ocr-poc\topbar_reader.py;$(MSBuildProjectDirectory)\..\ocr-poc\digit_templates.npz" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_IngameDist)" DestinationFiles="@(_IngameDist->'$(OutDir)Frontend\ingame\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" Condition="'@(_IngameDist)' != ''" />
+    <Copy SourceFiles="@(_PickbanBuild)" DestinationFiles="@(_PickbanBuild->'$(OutDir)Frontend\pickban\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" Condition="'@(_PickbanBuild)' != ''" />
+    <Copy SourceFiles="@(_OcrSidecar)" DestinationFolder="$(OutDir)ocr-poc" SkipUnchangedFiles="true" Condition="'@(_OcrSidecar)' != ''" />
+  </Target>
 </Project>

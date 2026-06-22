@@ -35,7 +35,23 @@ Accurate CS/Gold are read from the in-game HUD via a small Python OCR sidecar (`
 - **OCR sidecar** — Python 3: EasyOCR (PyTorch), OpenCV, dxcam, NumPy, Pillow.
 - **Game data** — League Client (LCU) API, Live Client Data API, Replay API, and an opt-in in-process memory reader (Farsight).
 
-## Quick start
+## Install (Windows)
+
+The easiest way to run OpenForestUI — no build tools, no .NET, no manual Python:
+
+1. Download **`OpenForestUI-<version>-win-x64.msi`** from the [latest release](https://github.com/bluestand-jp/OpenForestUI/releases/latest) and run it. It installs **per-user (no admin)** to `%LOCALAPPDATA%\Programs\OpenForestUI` with a Start Menu shortcut, and bundles its own .NET runtime + Python.
+   - Prefer no installer? Download the **`…-win-x64.zip`** instead and extract it to a **short path** (e.g. `C:\OpenForestUI`), then run `OpenForestUI.exe`.
+2. Launch **OpenForestUI** from the Start Menu.
+3. In OBS, add browser sources:
+   - Ingame: `http://localhost:9001/frontend`
+   - Champion select: `http://localhost:9001/?backend=ws://localhost:9001/api`
+4. *(Optional — exact CS/Gold)* Open **Settings → "Set up OCR now"**. It downloads the OCR dependencies (easyocr / PyTorch / …) **once, automatically** — no manual Python install. See [On-screen OCR](#on-screen-ocr-exact-cs--gold) for the capture requirements.
+
+First launch downloads the latest DataDragon cache automatically (needs an internet connection).
+
+## Build from source
+
+For development, or to build your own customized version:
 
 ```bash
 # 1. Get the code

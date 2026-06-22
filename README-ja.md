@@ -32,7 +32,27 @@ OpenForestUIはMITライセンスの完全オープンソースな大会用UIオ
 - **OCR サイドカー** — Python 3：EasyOCR（PyTorch）、OpenCV、dxcam、NumPy、Pillow
 - **ゲームデータ** — League Client (LCU) API、Live Client Data API、Replay API
 
-## Quick start
+## Install (Windows)
+
+**「環境構築なんてわかんねえよ！」**
+
+ええ、ごもっとも。このアプリのためだけにわざわざ付随するソフトを落としてくるの、面倒ですよね・・・。
+
+と、いうわけで、All-in-Oneのバイナリを用意しています。
+
+1. [最新リリース](https://github.com/bluestand-jp/OpenForestUI/releases/latest) から **`OpenForestUI-<version>-win-x64.msi`** を落として実行。**per-user（管理者不要）**で `%LOCALAPPDATA%\Programs\OpenForestUI` に入り、Start Menu にショートカットができます（ランタイム系はすべて同梱）
+   - インストーラを使いたくなければ **`…-win-x64.zip`** を**浅いパス**（例 `C:\OpenForestUI`）に展開して `OpenForestUI.exe` を実行
+2. Start Menu から **OpenForestUI** を起動
+3. OBS にブラウザソースを追加:
+   - ingame: `http://localhost:9001/frontend`
+   - champion select: `http://localhost:9001/?backend=ws://localhost:9001/api`
+4. （推奨）**Settings の「Set up OCR now」**を押すと、OCR 依存（easyocr / PyTorch など）を**自動ダウンロード**します。**この動作は、正確なUI描画のため、強くおすすめします**。撮影条件は [画面 OCR について](#on-screen-ocr-exact-cs--gold) を参照
+
+初回起動時に最新の DataDragon キャッシュを自動ダウンロードします（要ネット接続）
+
+## Build from source（ソースからビルド）
+
+開発したい人・自分用にカスタムしてビルドしたい人向け:
 
 ```bash
 # 1. コードを取得
